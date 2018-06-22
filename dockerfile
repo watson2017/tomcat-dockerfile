@@ -7,6 +7,7 @@ WORKDIR $CATALINA_HOME
 ENV TOMCAT_NATIVE_LIBDIR $CATALINA_HOME/native-jni-lib
 ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$TOMCAT_NATIVE_LIBDIR
 ENV OPENSSL_VERSION 1.1.0f-3+deb9u2
+
 RUN set -ex; \
 	currentVersion="$(dpkg-query --show --showformat '${Version}\n' openssl)"; \
 	if dpkg --compare-versions "$currentVersion" '<<' "$OPENSSL_VERSION"; then \
@@ -136,8 +137,9 @@ RUN set -e \
 		exit 1; \
 	fi  \
     && ln -s /tmp/yunqi-platform-war    /usr/local/tomcat/webapps/ \
-    && mkdir -p /tmp/tomcat-logs  \
-    && ln -s /tmp/tomcat-logs /usr/local/tomcat/logs/
+    && rm -rf /usr/local/tomcat/logs  \
+    && mkdir -p /tmp/logs \
+    && ln -s /tmp/logs   /usr/local/tomcat/logs
 
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
