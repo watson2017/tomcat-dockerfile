@@ -138,7 +138,9 @@ RUN set -e \
 	fi  \
     && ln -s /tmp/yunqi-platform-war    /usr/local/tomcat/webapps/ \
     && rm -rf /usr/local/tomcat/logs  \
-    && ln -s /tmp/logs   /usr/local/tomcat/logs
+    && ln -s /tmp/logs   /usr/local/tomcat/logs \
+    && /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo 'Asia/Shanghai' >/etc/timezone 
 
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
