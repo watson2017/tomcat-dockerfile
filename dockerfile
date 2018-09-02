@@ -140,7 +140,9 @@ RUN set -e \
     && rm -rf /usr/local/tomcat/logs  \
     && ln -s /tmp/logs   /usr/local/tomcat/logs \
     && /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && echo 'Asia/Shanghai' >/etc/timezone 
+    && mkdir /home/upload \
+    && mount -t nfs 192.168.0.1:/data/images/  /home/upload/  \
+    && echo 'Asia/Shanghai' > /etc/timezone
 
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
